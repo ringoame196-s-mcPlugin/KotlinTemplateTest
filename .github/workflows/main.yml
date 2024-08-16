@@ -12,9 +12,11 @@ jobs:
       env:
         WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
         REPOSITORY: ${{ github.repository }}
-        TAG: ${{ github.ref }}
+        TAG: ${{ github.ref_name }}
+        RELEASE_URL: ${{ github.event.release.html_url }}
+        RELEASE_TITLE: ${{ github.event.release.name }}
       run: |
         curl -X POST \
           -H "Content-Type: application/json" \
-          -d "{\"content\": \"A new release has been published for **${REPOSITORY}**!\\nTag: **${TAG}**\\n[View Release](https://github.com/${REPOSITORY}/releases/tag/${TAG})\"}" \
+          -d "{\"content\": \"**${RELEASE_TITLE}**\\nURL: ${RELEASE_URL}\"}" \
           $WEBHOOK_URL
