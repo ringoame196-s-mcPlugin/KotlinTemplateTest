@@ -1,0 +1,20 @@
+name: Release Notification
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify_discord:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send notification to Discord
+      env:
+        WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+        REPOSITORY: ${{ github.repository }}
+        TAG: ${{ github.ref }}
+      run: |
+        curl -X POST \
+          -H "Content-Type: application/json" \
+          -d "{\"content\": \"A new release has been published for **${REPOSITORY}**!\\nTag: **${TAG}**\\n[View Release](https://github.com/${REPOSITORY}/releases/tag/${TAG})\"}" \
+          $WEBHOOK_URL
