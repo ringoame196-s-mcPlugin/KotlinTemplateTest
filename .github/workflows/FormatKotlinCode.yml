@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '17' # 使用するJavaのバージョンを指定
+        java-version: '11' # 使用するJavaのバージョンを指定
 
     - name: Run Kotlin Format
       run: ./gradlew formatKotlin
