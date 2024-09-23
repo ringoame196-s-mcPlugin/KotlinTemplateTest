@@ -7,7 +7,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         super.onEnable()
         val plugin = this
-        server.pluginManager.registerEvents(Events(), plugin ) // ココ修正テスト2
+        server.pluginManager.registerEvents(Events(), plugin) // ココ修正テスト2
         // val command = getCommand("command")
         // command!!.setExecutor(Command())
         // command.tabCompleter = TabCompleter()
