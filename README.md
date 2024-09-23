@@ -2,14 +2,6 @@
 
 ## プラグイン説明
 
-<video src="https://github.com/Ringoame196/VideoStorage/blob/main/video/TameZombieHorse.mp4" autoplay muted></video>
-
-[video.mp4](https://github.com/Ringoame196/VideoStorage/blob/main/video/TameZombieHorse.mp4)
-
-
-<video src="https://github.com/Ringoame196/VideoStorage/blob/main/video/TameZombieHorse.mp4" controls="true"></video>
-
-
 ## コマンド
 
 ## 使い方
