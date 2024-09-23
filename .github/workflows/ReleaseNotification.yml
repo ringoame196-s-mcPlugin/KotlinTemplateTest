@@ -1,68 +1,18 @@
-name: Release Notification and Upload JAR
+name: Release Notification
 
 on:
   release:
     types: [published]
 
 jobs:
-  build_and_notify:
+  notify_discord:
     runs-on: ubuntu-latest
     steps:
-    # リポジトリをチェックアウト
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    # Java JDK 17 をセットアップ
-    - name: Set up JDK 17
-      uses: actions/setup-java@v1
-      with:
-        java-version: '17'
-
-    # Gradleビルドを実行
-    - name: FormatKotlin
-      run: ./gradlew formatKotlin
-    - name: Build with Gradle
-      run: ./gradlew build
-
-    # プロジェクト名を取得して変数に格納
-    - name: Get project name from Gradle
-      id: get_project_name
-      run: echo "::set-output name=PROJECT_NAME::$(./gradlew properties -q | grep '^name:' | awk '{print $2}')"
-
-    # JARファイルをリリースにアップロード
-    - name: Upload JAR to Release
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./build/libs/${{ steps.get_project_name.outputs.PROJECT_NAME }}.jar
-        asset_name: ${{ steps.get_project_name.outputs.PROJECT_NAME }}.jar
-        asset_content_type: application/java-archive
-
-    # タイトルがVer1.0.0ならREADME.mdをリリースノートに設定
-    - name: Conditional README update
-      if: ${{ github.event.release.name == 'Ver1.0.0' }}
-      id: readme_update
-      run: |
-        content=$(cat README.md)
-        echo "::set-output name=README_CONTENT::$content"
-
-    - name: Update Release Description
-      if: ${{ github.event.release.name == 'Ver1.0.0' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        RELEASE_ID: ${{ github.event.release.id }}
-        README_CONTENT: ${{ steps.readme_update.outputs.README_CONTENT }}
-      run: |
-        curl -X PATCH \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{\"body\": \"${README_CONTENT}\"}" \
-          https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}
-
-    # DiscordへリリースURLを通知
     - name: Send notification to Discord
       env:
         WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+        REPOSITORY: ${{ github.repository }}
+        TAG: ${{ github.ref_name }}
         RELEASE_URL: ${{ github.event.release.html_url }}
         RELEASE_TITLE: ${{ github.event.release.name }}
       run: |

@@ -1,0 +1,22 @@
+name: Format Kotlin Code
+
+on:
+  push:
+    branches:
+      - master # プッシュ先のブランチを指定（必要に応じて変更）
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17' # 使用するJavaのバージョンを指定
+
+    - name: Run Kotlin Format
+      run: ./gradlew formatKotlin
