@@ -39,6 +39,7 @@ configure<BukkitPluginDescription> {
     main = "com.github.ringoame196_s_mcPlugin.Main"
     version = gitVersion()
     apiVersion = "1." + pluginVersion.split(".")[1]
+    author = "ringoame196_s_mcPlugin"
     /*
     コマンド追加用
     commands {

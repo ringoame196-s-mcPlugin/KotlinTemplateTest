@@ -15,4 +15,4 @@
 ## プロジェクト情報
 - プロジェクトパス : ringoame196-s-mcPlugin/KotlinTemplateTest.git
 - 開発者名 : ringoame196_s_mcPlugin
-- 開発開始日 : 2024-08-21
+- 開発開始日 : 2024-08-29
